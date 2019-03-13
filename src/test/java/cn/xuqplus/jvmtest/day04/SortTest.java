@@ -42,13 +42,12 @@ public class SortTest {
    */
   @Test
   public void a() {
-    int flag;
     for (int i = 0; i < ints.length; i++) {
-      for (int j = i + 1; j < ints.length; j++) {
-        if (ints[i] > ints[j]) {
-          flag = ints[i];
-          ints[i] = ints[j];
-          ints[j] = flag;
+      for (int j = 0; j < ints.length - i -1; j++) {
+        if (ints[j] < ints[j + 1]) {
+          int flag = ints[j];
+          ints[j] = ints[j + 1];
+          ints[j + 1] = flag;
         }
       }
     }
@@ -59,9 +58,8 @@ public class SortTest {
    */
   @Test
   public void b() {
-    int flag;
     for (int i = 0; i < ints.length; i++) {
-      flag = i;
+      int flag = i;
       for (int j = i + 1; j < ints.length; j++) {
         if (ints[flag] < ints[j]) {
           flag = j;
