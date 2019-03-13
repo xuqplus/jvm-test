@@ -43,7 +43,7 @@ public class SortTest {
   @Test
   public void a() {
     for (int i = 0; i < ints.length; i++) {
-      for (int j = 0; j < ints.length - i -1; j++) {
+      for (int j = 0; j < ints.length - i - 1; j++) {
         if (ints[j] < ints[j + 1]) {
           int flag = ints[j];
           ints[j] = ints[j + 1];
@@ -71,5 +71,35 @@ public class SortTest {
         ints[i] = t;
       }
     }
+  }
+
+  /**
+   * 快速
+   */
+  @Test
+  public void c() {
+    fast(ints, 0, ints.length - 1);
+  }
+
+  private void fast(int[] arr, int left, int right) {
+    if (left >= right) {
+      return;
+    }
+    int l = left, r = right;
+    while (l < r) {
+      l++;
+      if (arr[l] > arr[left]) {
+        int t = arr[r];
+        arr[r] = arr[l];
+        arr[l] = t;
+        r--;
+        l--;
+      }
+    }
+    int t = arr[left];
+    arr[left] = arr[l];
+    arr[l] = t;
+    fast(arr, left, l -1);
+    fast(arr, r+1, right);
   }
 }
