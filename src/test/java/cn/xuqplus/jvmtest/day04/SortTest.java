@@ -88,7 +88,7 @@ public class SortTest {
     int l = left, r = right;
     while (l < r) {
       l++;
-      if (arr[l] > arr[left]) {
+      if (arr[l] < arr[left]) {
         int t = arr[r];
         arr[r] = arr[l];
         arr[l] = t;
@@ -99,7 +99,38 @@ public class SortTest {
     int t = arr[left];
     arr[left] = arr[l];
     arr[l] = t;
-    fast(arr, left, l -1);
-    fast(arr, r+1, right);
+    fast(arr, left, l - 1);
+    fast(arr, r + 1, right);
+  }
+
+  @Test
+  public void d() {
+    fast0(ints, 0, ints.length - 1);
+  }
+
+  private void fast0(int[] arr, int left, int right) {
+    if (left >= right) {
+      return;
+    }
+    int l = left, r = right;
+    while (l < r) {
+      while (l < r && arr[left] >= arr[r]) { // 远端搜索
+        r--;
+      }
+      while (l < r && arr[l] >= arr[left]) {
+        l++;
+      }
+      if (l != r) {
+        int t = arr[l];
+        arr[l] = arr[r];
+        arr[r] = t;
+      } else {
+        int t = arr[left];
+        arr[left] = arr[l];
+        arr[l] = t;
+      }
+    }
+    fast0(arr, left, l - 1);
+    fast0(arr, r + 1, right);
   }
 }
