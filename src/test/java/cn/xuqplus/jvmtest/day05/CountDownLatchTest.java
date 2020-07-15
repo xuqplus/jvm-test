@@ -39,4 +39,26 @@ public class CountDownLatchTest {
         latch.await();
         log.info("{}", Thread.currentThread().getName());
     }
+
+    @Test
+    public void b() throws InterruptedException {
+        CountDownLatch latch = new CountDownLatch(100);
+
+        ExecutorService executorService = Executors.newCachedThreadPool();
+        for (int i = 0; i < 100; i++) {
+            executorService.execute(() -> {
+                latch.countDown();
+                log.info("count down {}", Thread.currentThread().getName());
+
+                try {
+                    latch.await();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                log.info("await {}", Thread.currentThread().getName());
+            });
+        }
+
+        Thread.sleep(1000L);
+    }
 }
