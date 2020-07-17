@@ -69,4 +69,17 @@ public class TxTest {
         service.ydy3_REQUIRES_NEW(); // 不回滚
         log.info("{}", "");
     }
+
+    /**
+     * // Transaction rolled back because it has been marked as rollback-only
+     * <p>
+     * 事务合并导致提交失败
+     */
+    @Test
+    public void tx7() {
+        ApplicationContext context = new AnnotationConfigApplicationContext(BConfig.class);
+        Tx2Service service = context.getBean(Tx2Service.class);
+        service.ydy2(); // 事务合并导致提交失败
+        log.info("{}", "");
+    }
 }

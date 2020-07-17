@@ -2,6 +2,7 @@ package cn.xuqplus.jvmtest.day07_tx.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
@@ -73,5 +74,23 @@ public class Tx2Service {
             log.error(e.getLocalizedMessage(), e);
         }
         bService.insertUser(602L, "602L");
+    }
+
+
+    @Resource
+    private PlatformTransactionManager transactionManager;
+
+    /**
+     * 有事务方法调用有事务方法 - 捕获异常
+     */
+    @Transactional
+    public void ydy2() {
+        bService.insertUser(801L, "801L");
+        try {
+            service.insert2UsersTx();
+        } catch (Exception e) {
+            log.error(e.getLocalizedMessage(), e);
+        }
+        bService.insertUser(802L, "802L");
     }
 }
