@@ -40,4 +40,24 @@ public class Tx2Service {
         service.insert2Users_NOT_SUPPORTED();
         bService.insertUser(102L, "102L");
     }
+
+    /**
+     * 有事务方法调用有事务方法
+     */
+    @Transactional
+    public void ydy() {
+        bService.insertUser(401L, "401L");
+        service.insert2UsersTx();
+        bService.insertUser(402L, "402L");
+    }
+
+    /**
+     * 有事务方法调用有事务方法
+     */
+    @Transactional
+    public void ydy_REQUIRES_NEW() {
+        bService.insertUser(501L, "501L");
+        service.insert2Users_REQUIRES_NEW();
+        bService.insertUser(502L, "502L");
+    }
 }

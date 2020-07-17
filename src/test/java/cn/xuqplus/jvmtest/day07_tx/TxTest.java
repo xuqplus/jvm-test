@@ -37,4 +37,20 @@ public class TxTest {
         tx2Service.ydn(); // 外层事务方法回滚, 内层不支持事务不回滚
         log.info("{}", "");
     }
+
+    @Test
+    public void tx3() {
+        ApplicationContext context = new AnnotationConfigApplicationContext(BConfig.class);
+        Tx2Service tx2Service = context.getBean(Tx2Service.class);
+        tx2Service.ydy(); // 回滚了
+        log.info("{}", "");
+    }
+
+    @Test
+    public void tx4() {
+        ApplicationContext context = new AnnotationConfigApplicationContext(BConfig.class);
+        Tx2Service tx2Service = context.getBean(Tx2Service.class);
+        tx2Service.ydy_REQUIRES_NEW(); // 回滚了
+        log.info("{}", "");
+    }
 }

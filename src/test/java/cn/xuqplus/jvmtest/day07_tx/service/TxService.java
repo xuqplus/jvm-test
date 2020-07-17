@@ -49,4 +49,11 @@ public class TxService {
         int i = 1 / 0;
         service.insertUser(104L, "104L");
     }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void insert2Users_REQUIRES_NEW() {
+        service.insertUser(30L, "30L");
+        int i = 1 / 0;
+        service.insertUser(31L, "31L");
+    }
 }
