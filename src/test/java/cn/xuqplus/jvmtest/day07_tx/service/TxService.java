@@ -56,4 +56,18 @@ public class TxService {
         int i = 1 / 0;
         service.insertUser(31L, "31L");
     }
+
+    /**
+     * 有事务方法调用有事务方法 - 捕获异常
+     */
+    @Transactional
+    public void ydy3_REQUIRES_NEW() {
+        service.insertUser(701L, "701L");
+        try {
+            insert2Users_REQUIRES_NEW();
+        } catch (Exception e) {
+            log.error(e.getLocalizedMessage(), e);
+        }
+        service.insertUser(702L, "702L");
+    }
 }

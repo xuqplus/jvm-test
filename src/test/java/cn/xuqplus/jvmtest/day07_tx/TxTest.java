@@ -53,4 +53,20 @@ public class TxTest {
         tx2Service.ydy_REQUIRES_NEW(); // 回滚了
         log.info("{}", "");
     }
+
+    @Test
+    public void tx5() {
+        ApplicationContext context = new AnnotationConfigApplicationContext(BConfig.class);
+        Tx2Service tx2Service = context.getBean(Tx2Service.class);
+        tx2Service.ydy2_REQUIRES_NEW(); // 内层回滚, 外层无异常不回滚
+        log.info("{}", "");
+    }
+
+    @Test
+    public void tx6() {
+        ApplicationContext context = new AnnotationConfigApplicationContext(BConfig.class);
+        TxService service = context.getBean(TxService.class);
+        service.ydy3_REQUIRES_NEW(); // 不回滚
+        log.info("{}", "");
+    }
 }

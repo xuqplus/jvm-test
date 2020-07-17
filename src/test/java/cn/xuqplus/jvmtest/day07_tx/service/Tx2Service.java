@@ -60,4 +60,18 @@ public class Tx2Service {
         service.insert2Users_REQUIRES_NEW();
         bService.insertUser(502L, "502L");
     }
+
+    /**
+     * 有事务方法调用有事务方法 - 捕获异常
+     */
+    @Transactional
+    public void ydy2_REQUIRES_NEW() {
+        bService.insertUser(601L, "601L");
+        try {
+            service.insert2Users_REQUIRES_NEW();
+        } catch (Exception e) {
+            log.error(e.getLocalizedMessage(), e);
+        }
+        bService.insertUser(602L, "602L");
+    }
 }
