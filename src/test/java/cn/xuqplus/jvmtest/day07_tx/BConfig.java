@@ -6,12 +6,15 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 
 @Configuration
 @ComponentScan(basePackages = {"cn.xuqplus.jvmtest.day07_tx"})
 @EnableAspectJAutoProxy(proxyTargetClass = true)
+@EnableTransactionManagement
 public class BConfig {
 
     @Bean
@@ -28,5 +31,10 @@ public class BConfig {
         dataSource.setUser("test");
         dataSource.setPassword("123456");
         return dataSource;
+    }
+
+    @Bean
+    public DataSourceTransactionManager dataSourceTransactionManager() {
+        return new DataSourceTransactionManager(dataSource());
     }
 }
