@@ -11,13 +11,28 @@ public class UncaughtExceptionTest {
 
     @Test
     void test() {
-        Thread thread = new Thread(() -> {
-            throw new AException("test uncaught exception ..");
-        });
-        thread.setUncaughtExceptionHandler((t, e) -> {
-            log.info("{} {}", t.getName(), e.getMessage());
-        });
-        thread.start();
+        {
+            Thread thread = new Thread(() -> {
+                throw new AException("test uncaught exception ..");
+            });
+            thread.setUncaughtExceptionHandler((t, e) -> {
+                log.info("thread {} {}", t.getName(), e.getMessage());
+            });
+            thread.start();
+        }
+        {
+            ThreadGroup group = new ThreadGroup("a-group") {
+                @Override
+                public void uncaughtException(Thread t, Throwable e) {
+                    log.info("group {} {}", t.getName(), e.getMessage());
+                }
+            };
+            Thread thread = new Thread(group, () -> {
+                log.info("{}", Thread.currentThread().getName());
+                throw new AException("test thread group");
+            });
+            thread.start();
+        }
 
         LockSupport.parkNanos(TimeUnit.SECONDS.toNanos(4));
     }
